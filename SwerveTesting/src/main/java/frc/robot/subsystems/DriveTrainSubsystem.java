@@ -114,45 +114,36 @@ public class DriveTrainSubsystem extends SubsystemBase {
     rearRightDirectionMotor.set(ControlMode.PercentOutput, 0);
   }
 
-  public int encoderValue(String encoder) {
-    int returnValue = 0;
-    if (encoder == motors[0] || encoder == motors[1] || encoder == motors[2] || encoder == motors[3]) {
-      switch (encoder) {
-        case "FrontLeft":
-          returnValue = frontLeftEncoder.get();
-          //break;
-        case "RearRight":
-          returnValue = rearRightEncoder.get();
-          //break;
-        case "RearLeft":
-          returnValue = rearLeftEncoder.get();
-          //break;
-        //case "FrontRight":
-          //returnValue = frontRightEncoder.get();
-          //break;
-        //default:
-        //  returnValue = 0;
-      }
-    }
-
-    return -returnValue;
+  public int frontLeftEncoderValue() {
+    return -frontLeftEncoder.get();
   }
 
-  public void moveDirectionalMotor(String motor, double speed) {
-    switch (motor) {
-      case "FrontLeft":
-        frontLeftDirectionMotor.set(ControlMode.PercentOutput, speed);
-        //break;
-      case "RearRight":
-        rearRightDirectionMotor.set(ControlMode.PercentOutput, speed);
-        //break;
-      case "RearLeft":
-        rearLeftDirectionMotor.set(ControlMode.PercentOutput, speed);
-        //break;
-      case "FrontRight":
-        frontRightDirectionMotor.set(ControlMode.PercentOutput, speed); 
-        //break;
-    }
+  public int frontRightEncoderValue() {
+    return -frontRightEncoder.get();
+  }
+
+  public int rearLeftEncoderValue() {
+    return -rearLeftEncoder.get();
+  }
+
+  public int rearRightEncoderValue() {
+    return -rearRightEncoder.get();
+  }
+
+  public void moveFLDirectionMotor(double speed) {
+    frontLeftDirectionMotor.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void moveFRDirectionMotor(double speed) {
+    frontRightDirectionMotor.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void moveRRDirectionMotor(double speed) {
+    rearRightDirectionMotor.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void moveRLDirectionMotor(double speed) {
+    rearLeftDirectionMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public void startup() {
@@ -170,35 +161,92 @@ public class DriveTrainSubsystem extends SubsystemBase {
     long desiredTarget = directionTargetValue(dirX, dirY);
     
 
-    if (desiredTarget == 0) {
-      //TODO: Make this based on if found the prox yet not if target = 0
-      for (int i = 0; i < 4; i++) {
-        if(encoderRemaining(0, motors[i], true) > Constants.swerveRotationError) {
-          moveDirectionalMotor(motors[i], Constants.swerveRotationSpeed * (encoderRemaining(desiredTarget, motors[i], false)/encoderRemaining(desiredTarget, motors[i], true)));
-        } else {
-          stopMotors();
-        }
+    /*
+    *  if (desiredTarget == 0) {
+    *    //TODO: Make this based on if found the prox yet not if target = 0
+    *    for (int i = 0; i < 4; i++) {
+    *      if(encoderRemaining(0, motors[i], true) > Constants.swerveRotationError) {
+    *        moveDirectionalMotor(motors[i], Constants.swerveRotationSpeed * (encoderRemaining(desiredTarget, motors[i], false)/encoderRemaining(desiredTarget, motors[i], true)));
+    *      } else {
+    *        stopMotors();
+    *      }
+    *    }
+    *  } else{
+    *    for (int i = 0; i < 4; i++) {
+    *      if(encoderRemaining(desiredTarget, motors[i], true) > Constants.swerveRotationError) {
+    *        moveDirectionalMotor(motors[i], Constants.swerveRotationSpeed * (encoderRemaining(desiredTarget, motors[i], false)/encoderRemaining(desiredTarget, motors[i], true)));
+    *      } else {
+    *        stopMotors();
+    *      }
+    *    }
+    *  }
+    */
+
+    if (desiredTarget != 0) {
+      if(encoderRemaining(desiredTarget, "FrontLeft", true) > Constants.swerveRotationError) {
+        moveFLDirectionMotor(Constants.swerveRotationSpeed * (encoderRemaining(desiredTarget, "FrontLeft", false)/encoderRemaining(desiredTarget, "FrontLeft", true)));
+      } else {
+        stopMotors();
       }
-    } else{
-      for (int i = 0; i < 4; i++) {
-        if(encoderRemaining(desiredTarget, motors[i], true) > Constants.swerveRotationError) {
-          moveDirectionalMotor(motors[i], Constants.swerveRotationSpeed * (encoderRemaining(desiredTarget, motors[i], false)/encoderRemaining(desiredTarget, motors[i], true)));
-        } else {
-          stopMotors();
-        }
+
+      if(encoderRemaining(desiredTarget, "RearRight", true) > Constants.swerveRotationError) {
+        moveRRDirectionMotor(Constants.swerveRotationSpeed * (encoderRemaining(desiredTarget, "RearRight", false)/encoderRemaining(desiredTarget, "RearRight", true)));
+      } else {
+        stopMotors();
       }
+
+      /*if(encoderRemaining(desiredTarget, "RearLeft", true) > Constants.swerveRotationError) {
+        moveDirectionalMotor("RearLeft", Constants.swerveRotationSpeed * (encoderRemaining(desiredTarget, "RearLeft", false)/encoderRemaining(desiredTarget, "RearLeft", true)));
+      } else {
+        stopMotors();
+      }
+
+      if(encoderRemaining(desiredTarget, "FrontRight", true) > Constants.swerveRotationError) {
+        moveDirectionalMotor("FrontRight", Constants.swerveRotationSpeed * (encoderRemaining(desiredTarget, "FrontRight", false)/encoderRemaining(desiredTarget, "FrontRight", true)));
+      } else {
+        stopMotors();
+      }*/
+    } else {
+      if(encoderRemaining(0, "FrontLeft", true) > Constants.swerveRotationError) {
+        moveFLDirectionMotor(Constants.swerveRotationSpeed * (encoderRemaining(desiredTarget, "FrontLeft", false)/encoderRemaining(desiredTarget, "FrontLeft", true)));
+      } else {
+        stopMotors();
+      }
+
+      if(encoderRemaining(0, "RearRight", true) > Constants.swerveRotationError) {
+        moveRRDirectionMotor(Constants.swerveRotationSpeed * (encoderRemaining(desiredTarget, "RearRight", false)/encoderRemaining(desiredTarget, "RearRight", true)));
+      } else {
+        stopMotors();
+      }
+
+      /*if(encoderRemaining(0, "RearLeft", true) > Constants.swerveRotationError) {
+        moveDirectionalMotor("RearLeft", Constants.swerveRotationSpeed * (encoderRemaining(desiredTarget, "RearLeft", false)/encoderRemaining(desiredTarget, "RearLeft", true)));
+      } else {
+        stopMotors();
+      }
+
+      if(encoderRemaining(0, "FrontRight", true) > Constants.swerveRotationError) {
+        moveDirectionalMotor("FrontRight", Constants.swerveRotationSpeed * (encoderRemaining(desiredTarget, "FrontRight", false)/encoderRemaining(desiredTarget, "FrontRight", true)));
+      } else {
+        stopMotors();
+      }*/
     }
-
-    
-
   }
 
   public long encoderRemaining(long targetValue, String encoder, boolean abs) {
 
-    if (abs) {
-      encoderRemainingValue = Math.abs(-targetValue + encoderValue(encoder));
+    if (encoder == "FrontLeft") {
+      if (abs) {
+        encoderRemainingValue = Math.abs(-targetValue + frontLeftEncoderValue());
+      } else {
+        encoderRemainingValue = -targetValue + frontLeftEncoderValue();
+      }
     } else {
-      encoderRemainingValue = -targetValue + encoderValue(encoder);
+      if (abs) {
+        encoderRemainingValue = Math.abs(-targetValue + rearRightEncoderValue());
+      } else {
+        encoderRemainingValue = -targetValue + rearRightEncoderValue();
+      }
     }
 
     

@@ -18,7 +18,7 @@ package frc.robot;
 public final class Constants {
 
     //Swerve related variables
-    public static int swerveRotationError = 2;
+    public static int swerveRotationError = 5;
     public static double swerveRotationSpeed = 0.3;
 
 

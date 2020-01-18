@@ -101,10 +101,10 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
 
     SmartDashboard.putNumber("Target In Ticks", RobotContainer.driveTrainSubsystem.directionTargetValue(RobotContainer.getDriverAxis(0), RobotContainer.getDriverAxis(1)));
-    SmartDashboard.putNumber("FLEncoder Value", RobotContainer.driveTrainSubsystem.encoderValue(RobotContainer.driveTrainSubsystem.motors[0]));
-    SmartDashboard.putNumber("FREncoder Value", RobotContainer.driveTrainSubsystem.encoderValue(RobotContainer.driveTrainSubsystem.motors[1]));
-    SmartDashboard.putNumber("RLEncoder Value", RobotContainer.driveTrainSubsystem.encoderValue(RobotContainer.driveTrainSubsystem.motors[2]));
-    SmartDashboard.putNumber("RREncoder Value", RobotContainer.driveTrainSubsystem.encoderValue(RobotContainer.driveTrainSubsystem.motors[3]));
+    SmartDashboard.putNumber("FLEncoder Value", RobotContainer.driveTrainSubsystem.frontLeftEncoderValue());
+    SmartDashboard.putNumber("RREncoder Value", RobotContainer.driveTrainSubsystem.rearRightEncoderValue());
+    SmartDashboard.putNumber("RLEncoder Value", RobotContainer.driveTrainSubsystem.rearLeftEncoderValue());
+    SmartDashboard.putNumber("FREncoder Value", RobotContainer.driveTrainSubsystem.frontRightEncoderValue());
     SmartDashboard.putNumber("Encoder Remaining", RobotContainer.driveTrainSubsystem.returnERV());
 
     SmartDashboard.putNumber("X", RobotContainer.getDriverAxis(0));
