@@ -159,28 +159,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
     moveDriveMotors(speX);
 
     long desiredTarget = directionTargetValue(dirX, dirY);
-    
-
-    /*
-    *  if (desiredTarget == 0) {
-    *    //TODO: Make this based on if found the prox yet not if target = 0
-    *    for (int i = 0; i < 4; i++) {
-    *      if(encoderRemaining(0, motors[i], true) > Constants.swerveRotationError) {
-    *        moveDirectionalMotor(motors[i], Constants.swerveRotationSpeed * (encoderRemaining(desiredTarget, motors[i], false)/encoderRemaining(desiredTarget, motors[i], true)));
-    *      } else {
-    *        stopMotors();
-    *      }
-    *    }
-    *  } else{
-    *    for (int i = 0; i < 4; i++) {
-    *      if(encoderRemaining(desiredTarget, motors[i], true) > Constants.swerveRotationError) {
-    *        moveDirectionalMotor(motors[i], Constants.swerveRotationSpeed * (encoderRemaining(desiredTarget, motors[i], false)/encoderRemaining(desiredTarget, motors[i], true)));
-    *      } else {
-    *        stopMotors();
-    *      }
-    *    }
-    *  }
-    */
 
     if (desiredTarget != 0) {
       if(encoderRemaining(desiredTarget, "FrontLeft", true) > Constants.swerveRotationError) {
