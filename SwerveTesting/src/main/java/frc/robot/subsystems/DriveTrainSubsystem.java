@@ -37,7 +37,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   private DigitalInput prox;
 
-  public static String motors[] = {"FrontLeft", "FrontRight", "RearLeft", "RearRight"};
+  public static String motors[] = {"FrontLeft", "RearRight", "RearLeft", "FrontRight"};
 
 
   /**
@@ -120,19 +120,19 @@ public class DriveTrainSubsystem extends SubsystemBase {
       switch (encoder) {
         case "FrontLeft":
           returnValue = frontLeftEncoder.get();
-          break;
-        case "FrontRight":
-          returnValue = frontRightEncoder.get();
-          break;
-        case "RearLeft":
-          returnValue = rearLeftEncoder.get();
-          break;
+          //break;
         case "RearRight":
           returnValue = rearRightEncoder.get();
-          break;
+          //break;
+        case "RearLeft":
+          returnValue = rearLeftEncoder.get();
+          //break;
+        //case "FrontRight":
+          //returnValue = frontRightEncoder.get();
+          //break;
+        //default:
+        //  returnValue = 0;
       }
-    } else {
-      returnValue =  0;
     }
 
     return -returnValue;
@@ -142,16 +142,16 @@ public class DriveTrainSubsystem extends SubsystemBase {
     switch (motor) {
       case "FrontLeft":
         frontLeftDirectionMotor.set(ControlMode.PercentOutput, speed);
-        break;
-      case "FrontRight":
-        frontRightDirectionMotor.set(ControlMode.PercentOutput, speed);
-        break;
+        //break;
+      case "RearRight":
+        rearRightDirectionMotor.set(ControlMode.PercentOutput, speed);
+        //break;
       case "RearLeft":
         rearLeftDirectionMotor.set(ControlMode.PercentOutput, speed);
-        break;
-      case "RearRight":
-        rearRightDirectionMotor.set(ControlMode.PercentOutput, speed); 
-        break;
+        //break;
+      case "FrontRight":
+        frontRightDirectionMotor.set(ControlMode.PercentOutput, speed); 
+        //break;
     }
   }
 

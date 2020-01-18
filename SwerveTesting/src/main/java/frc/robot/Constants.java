@@ -19,7 +19,7 @@ public final class Constants {
 
     //Swerve related variables
     public static int swerveRotationError = 2;
-    public static double swerveRotationSpeed = 0.1;
+    public static double swerveRotationSpeed = 0.3;
 
 
 
