@@ -100,20 +100,11 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    SmartDashboard.putNumber("FL Encoder", RobotContainer.swerveDriveSubsystem.motorFL.encoderValue());
-    SmartDashboard.putNumber("FR Encoder", RobotContainer.swerveDriveSubsystem.motorFR.encoderValue());
-    SmartDashboard.putNumber("RL Encoder", RobotContainer.swerveDriveSubsystem.motorRL.encoderValue());
-    SmartDashboard.putNumber("RR Encoder", RobotContainer.swerveDriveSubsystem.motorRR.encoderValue());
-
-    SmartDashboard.putNumber("FL Remaining", RobotContainer.swerveDriveSubsystem.motorFL.encoderRemainingValue);
-    SmartDashboard.putNumber("FR Remaining", RobotContainer.swerveDriveSubsystem.motorFR.encoderRemainingValue);
-    SmartDashboard.putNumber("RL Remaining", RobotContainer.swerveDriveSubsystem.motorRL.encoderRemainingValue);
-    SmartDashboard.putNumber("RR Remaining", RobotContainer.swerveDriveSubsystem.motorRR.encoderRemainingValue);
-
-    SmartDashboard.putNumber("FL Target", RobotContainer.swerveDriveSubsystem.motorFL.directionTarget);
-    SmartDashboard.putNumber("FR Target", RobotContainer.swerveDriveSubsystem.motorFR.directionTarget);
-    SmartDashboard.putNumber("RL Target", RobotContainer.swerveDriveSubsystem.motorRL.directionTarget);
-    SmartDashboard.putNumber("RR Target", RobotContainer.swerveDriveSubsystem.motorRR.directionTarget);
+    for (int i = 0; i < 4; i++){
+      SmartDashboard.putNumber(RobotContainer.swerveDriveSubsystem.motorNames[i] + " Encoder", RobotContainer.swerveDriveSubsystem.motors[i].encoderValue());
+      SmartDashboard.putNumber(RobotContainer.swerveDriveSubsystem.motorNames[i] + " Remaining", RobotContainer.swerveDriveSubsystem.motors[i].encoderRemainingValue);
+      SmartDashboard.putNumber(RobotContainer.swerveDriveSubsystem.motorNames[i] + " Target", RobotContainer.swerveDriveSubsystem.motors[i].directionTarget);
+    }
 
     SmartDashboard.putNumber("X Value", RobotContainer.getDriverAxis(0));
     SmartDashboard.putNumber("Y Value", RobotContainer.getDriverAxis(1));
