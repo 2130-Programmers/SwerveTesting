@@ -19,11 +19,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   private TalonFX rearLeftDriveMotor;
   private TalonFX rearRightDriveMotor;
 
-  public Motor motorFL;
-  public Motor motorFR;
-  public Motor motorRL;
-  public Motor motorRR;
-
+  public Motor motors[];
+  public String motorNames[];
 
   private double desiredSpeed;
 
@@ -35,15 +32,21 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
   public SwerveDriveSubsystem() {
 
-    motorFL = new Motor(7, 16, 17, 3);
-    motorFR = new Motor(5, 14, 15, 2);
-    motorRL = new Motor(1, 12, 13, 0);
-    motorRR = new Motor(3, 10, 11, 1);    
+    motors[0] = new Motor(7, 16, 17, 3);
+    motors[1] = new Motor(5, 14, 15, 2);
+    motors[2] = new Motor(1, 12, 13, 0);
+    motors[3] = new Motor(3, 10, 11, 1);    
     
     frontLeftDriveMotor = new TalonFX(6);
     frontRightDriveMotor = new TalonFX(4);
     rearLeftDriveMotor = new TalonFX(0);
     rearRightDriveMotor = new TalonFX(2);
+
+    motorNames[0] = "FL";
+    motorNames[1] = "FR";
+    motorNames[2] = "RL";
+    motorNames[3] = "RR";
+
 
   }
 
@@ -74,10 +77,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   }
 
   public void moveSwervePointTurn(double leftT, double rightT) {
-    motorFL.swerveDatBoi(0.8, 0.6);
-    motorFR.swerveDatBoi(-0.8, 0.6);
-    motorRL.swerveDatBoi(-0.8, 0.6);
-    motorRR.swerveDatBoi(0.8, 0.6);
+    motors[0].swerveDatBoi(0.8, 0.6);
+    motors[1].swerveDatBoi(-0.8, 0.6);
+    motors[2].swerveDatBoi(-0.8, 0.6);
+    motors[3].swerveDatBoi(0.8, 0.6);
 
     double appliedSpeed = findSpeed(leftT, rightT);
 
@@ -88,10 +91,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   }
 
   public void moveSwerveStrafe(double leftT, double rightT) {
-    motorFL.swerveDatBoi(1, 0);
-    motorFR.swerveDatBoi(1, 0);
-    motorRL.swerveDatBoi(1, 0);
-    motorRR.swerveDatBoi(1, 0);
+    motors[0].swerveDatBoi(1, 0);
+    motors[1].swerveDatBoi(1, 0);
+    motors[2].swerveDatBoi(1, 0);
+    motors[3].swerveDatBoi(1, 0);
 
     double appliedSpeed = findSpeed(leftT, rightT);
 
@@ -99,27 +102,25 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   }
 
   private void leftSwerves(double x, double y) {
-    motorFL.swerveDatBoi(x, y);
-    motorFR.swerveDatBoi(x, y);
+    motors[0].swerveDatBoi(x, y);
+    motors[1].swerveDatBoi(x, y);
   }
 
   private void rightSwerves(double x, double y) {
-    motorRL.swerveDatBoi(x, y);
-    motorRR.swerveDatBoi(x, y);
+    motors[2].swerveDatBoi(x, y);
+    motors[3].swerveDatBoi(x, y);
   }
 
   public void zeroAllEncoders() {
-    motorFL.zeroEncoder();
-    motorFR.zeroEncoder();
-    motorRL.zeroEncoder();
-    motorRR.zeroEncoder();
+    for (int i = 0; i < 4; i++) {
+      motors[i].zeroEncoder();
+    }
   }
 
   public void zeroAllEncodersBasedOnProx() {
-    motorFL.zeroEncoderBasedOnProx();
-    motorFR.zeroEncoderBasedOnProx();
-    motorRL.zeroEncoderBasedOnProx();
-    motorRR.zeroEncoderBasedOnProx();
+    for (int i = 0; i < 4; i++) {
+      motors[i].zeroEncoderBasedOnProx();
+    }
   }
 
   private double findSpeed(double negitive, double positive) {
