@@ -45,6 +45,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
    */
   public DriveTrainSubsystem() {
 
+    frontLeftDirectionMotor = new VictorSPX(7);
     frontRightDirectionMotor = new VictorSPX(5);
     rearLeftDirectionMotor = new VictorSPX(1);
     rearRightDirectionMotor = new VictorSPX(3);
@@ -54,7 +55,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     rearLeftDriveMotor = new TalonFX(0);
     rearRightDriveMotor = new TalonFX(2);
 
-
+    frontLeftEncoder = new Encoder(6, 7);
     frontRightEncoder = new Encoder(4, 5);
     rearLeftEncoder = new Encoder(0, 1);
     rearRightEncoder = new Encoder(2, 3);
